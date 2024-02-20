@@ -17,7 +17,7 @@ import hashlib
 import yara
 import pandas as pd
 import numpy as np
-from sklearn.externals import joblib
+import joblib
 import urllib
 import urllib3
 import json
