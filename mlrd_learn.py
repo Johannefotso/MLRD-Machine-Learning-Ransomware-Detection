@@ -12,7 +12,7 @@ from sklearn import model_selection
 import sklearn.ensemble as ske
 import sklearn.metrics
 from sklearn.metrics import f1_score
-from sklearn.externals import joblib
+import joblib
 
 # Main code function that trains the random forest algorithm on dataset.
 def main():
