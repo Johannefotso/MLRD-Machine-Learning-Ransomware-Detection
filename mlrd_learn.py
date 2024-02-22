@@ -8,10 +8,12 @@
 import pandas as pd
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
 from sklearn import model_selection
 import sklearn.ensemble as ske
 import sklearn.metrics
 from sklearn.metrics import f1_score
+from sklearn.model_selection import learning_curve
 import joblib
 
 # Main code function that trains the random forest algorithm on dataset.
@@ -47,6 +49,35 @@ def main():
     f = f1_score(y_train, y_train_pred)
     print("\t[*] F1 Score: ", round(f*100, 2), '%')
 
+    # Visualize accuracy and loss over number of samples
+    train_sizes, train_scores, test_scores, fit_times, _ = \
+        learning_curve(clf, X_train, y_train, cv=10, n_jobs=-1,
+                       train_sizes=np.linspace(.1, 1.0, 5),
+                       return_times=True)
+
+    # Plot learning curve
+    plt.figure()
+    plt.title("Learning Curve")
+    plt.xlabel("Training examples")
+    plt.ylabel("Score")
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(test_scores, axis=1)
+    test_scores_std = np.std(test_scores, axis=1)
+    plt.grid()
+
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                     train_scores_mean + train_scores_std, alpha=0.1,
+                     color="r")
+    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
+                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
+             label="Training score")
+    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
+             label="Cross-validation score")
+
+    plt.legend(loc="best")
+
     # Save the configuration of the classifier and features as a pickle file.
     all_features = X.shape[1]
     features = []
@@ -61,6 +92,8 @@ def main():
         print("\n[*] Saved.")
     except:
         print('\n[-] Error: Algorithm and feature list not saved correctly.\n')
+
+    plt.show()
 
 if __name__ == '__main__':
     main()
