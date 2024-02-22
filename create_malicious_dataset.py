@@ -156,7 +156,7 @@ if __name__ == '__main__':
     colorama.init()
 
     # Extracts features from benign files and writes to CSV.
-    for f in os.listdir('data_ransomware.csv'):
+    for f in os.listdir('ransomware/'):
         print("\n[+] Extracting features from ", f)
         try:
             features = extract_features(os.path.join('ransomware/', f))

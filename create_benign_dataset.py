@@ -10,6 +10,7 @@ import os
 import hashlib
 import math
 import array
+import colorama
 import pefile
 import yara
 from termcolor import colored
