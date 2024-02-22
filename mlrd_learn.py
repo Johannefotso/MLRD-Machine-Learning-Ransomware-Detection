@@ -49,6 +49,12 @@ def main():
     f = f1_score(y_train, y_train_pred)
     print("\t[*] F1 Score: ", round(f*100, 2), '%')
 
+    # Visualize accuracy and loss over number of samples
+    train_sizes, train_scores, test_scores, fit_times, _ = \
+        learning_curve(clf, X_train, y_train, cv=10, n_jobs=-1,
+                       train_sizes=np.linspace(.1, 1.0, 5),
+                       return_times=True)
+
     # Plot learning curve
     plt.figure()
     plt.title("Learning Curve")
